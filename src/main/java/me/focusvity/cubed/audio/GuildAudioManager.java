@@ -42,6 +42,7 @@ public class GuildAudioManager
         if (musicManager == null)
         {
             musicManager = new GuildMusicManager(playerManager);
+            managers.put(guild.getIdLong(), musicManager);
         }
 
         guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
