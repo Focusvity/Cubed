@@ -37,14 +37,7 @@ public class GuildAudioManager
 
     public synchronized GuildMusicManager getMusicManager(Guild guild)
     {
-        GuildMusicManager musicManager = managers.get(guild.getIdLong());
-
-        if (musicManager == null)
-        {
-            musicManager = new GuildMusicManager(playerManager);
-            managers.put(guild.getIdLong(), musicManager);
-        }
-
+        GuildMusicManager musicManager = managers.computeIfAbsent(guild.getIdLong(), $ -> new GuildMusicManager(playerManager));
         guild.getAudioManager().setSendingHandler(musicManager.getSendHandler());
         return musicManager;
     }

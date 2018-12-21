@@ -22,26 +22,30 @@ public class TrackScheduler extends AudioEventAdapter
 
     public void queue(AudioTrack track)
     {
-        if (player.getPlayingTrack() != null)
+        if (!player.startTrack(track, true))
         {
             queue.offer(track);
-        }
-        else
-        {
-            player.playTrack(track);
         }
     }
 
     public void nextTrack()
     {
-        AudioTrack track = queue.poll();
-        if (track == null)
+        if (queue.peek() == null)
         {
-            player.startTrack(null, false);
+            return;
         }
-        else
+
+        AudioTrack track = queue.poll();
+
+        if (track != null)
         {
             player.startTrack(track, false);
+            return;
+        }
+
+        if (player.getPlayingTrack() != null)
+        {
+            player.stopTrack();
         }
     }
 
