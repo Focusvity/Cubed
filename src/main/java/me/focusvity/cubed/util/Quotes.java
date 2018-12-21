@@ -1,7 +1,6 @@
 package me.focusvity.cubed.util;
 
 import lombok.Getter;
-import net.dv8tion.jda.core.entities.TextChannel;
 
 public enum Quotes
 {
@@ -50,6 +49,12 @@ public enum Quotes
     }),
     FLEEK(new String[]{
             "irix = isis confirmed"
+    }),
+    NEO(new String[]{
+            "you must've dated a handicap",
+            "Idk why, but when i see Zekurt, my meat go up o w o",
+            "i cant think of anything else right now but i think i beheaded a jew once",
+            "i was so drunk that when i saw jake's \"gottem\" picture, i nutted fast"
     });
 
     @Getter
