@@ -34,9 +34,10 @@ public class Quote extends CCommand
             return;
         }
 
-        Quotes quote = Quotes.findQuote(event.getTextChannel(), args[1]);
+        Quotes quote = Quotes.findQuote(args[1]);
         if (quote == null)
         {
+            event.reply("I couldn't find any quote for `" + args[1] + "`");
             return;
         }
 

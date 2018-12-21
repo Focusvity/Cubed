@@ -60,7 +60,7 @@ public enum Quotes
         this.quotes = quotes;
     }
 
-    public static Quotes findQuote(TextChannel channel, String string)
+    public static Quotes findQuote(String string)
     {
         try
         {
@@ -68,10 +68,7 @@ public enum Quotes
         }
         catch (Exception ex)
         {
-            channel.sendMessage("Can't find a single quote for `" + string + "`");
         }
-
-        channel.sendMessage("I couldn't find any quote for `" + string + "`");
         return null;
     }
 }
