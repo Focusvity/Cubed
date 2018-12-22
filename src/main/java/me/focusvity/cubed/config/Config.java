@@ -100,6 +100,30 @@ public class Config
             modified = true;
         }
 
+        if (iConfig.getSqlHost() == null)
+        {
+            iConfig.setSqlHost("127.0.0.1");
+            modified = true;
+        }
+
+        if (iConfig.getSqlPort() < 0)
+        {
+            iConfig.setSqlPort(3306);
+            modified = true;
+        }
+
+        if (iConfig.getSqlUser() == null)
+        {
+            iConfig.setSqlUser("root");
+            modified = true;
+        }
+
+        if (iConfig.getSqlPassword() == null)
+        {
+            iConfig.setDefaultPrefix("");
+            modified = true;
+        }
+
         if (modified)
         {
             save();

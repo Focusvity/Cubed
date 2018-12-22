@@ -7,6 +7,8 @@ import me.focusvity.cubed.audio.GuildAudioManager;
 import me.focusvity.cubed.command.CCommand;
 import me.focusvity.cubed.config.Config;
 import me.focusvity.cubed.config.IConfig;
+import me.focusvity.cubed.listener.MessageListener;
+import me.focusvity.cubed.util.SQLManager;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.OnlineStatus;
@@ -25,6 +27,7 @@ public class Cubed
     @Getter
     private static Logger logger = LoggerFactory.getLogger(Cubed.class);
     public static GuildAudioManager gam = new GuildAudioManager();
+    public static IConfig config;
 
     public static void main(String[] args)
     {
@@ -42,11 +45,16 @@ public class Cubed
     {
         try
         {
-            IConfig s = new Config().getIConfig();
+            config = new Config().getIConfig();
+            SQLManager manager = new SQLManager(config.getSqlHost(),
+                    config.getSqlPort(),
+                    config.getSqlUser(),
+                    config.getSqlPassword(),
+                    config.getSqlDatabase());
 
             CommandClientBuilder ccb = new CommandClientBuilder();
-            ccb.setOwnerId(s.getOwnerId());
-            ccb.setPrefix(s.getDefaultPrefix());
+            ccb.setOwnerId(config.getOwnerId());
+            ccb.setPrefix(config.getDefaultPrefix());
             ccb.setAlternativePrefix("~>");
             ccb.useHelpBuilder(false);
 
@@ -59,10 +67,11 @@ public class Cubed
             }
 
             CommandClient client = ccb.build();
-            api = new JDABuilder(s.getToken())
+            api = new JDABuilder(config.getToken())
                     .setBulkDeleteSplittingEnabled(false)
                     .setAutoReconnect(true)
                     .addEventListener(client)
+                    .addEventListener(new MessageListener())
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
                     .build();
             api.awaitReady();

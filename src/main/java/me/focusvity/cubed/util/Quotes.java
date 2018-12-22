@@ -40,7 +40,7 @@ public enum Quotes
             "Rhyfomos",
             "remove robin",
             "i love being a mom but it's tough when my kids come from filthy from radical"
-            + "terrisiom",
+            + " terrisiom",
             ":^)",
             "ah yes",
             "square emo european",
