@@ -1,7 +1,7 @@
 package me.focusvity.cubed.command.owner;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import me.focusvity.cubed.command.CCommand;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.script.ScriptEngine;
@@ -24,10 +24,8 @@ public class Eval extends CCommand
     }
 
     @Override
-    protected void execute(CommandEvent event)
+    protected void execute(MessageReceivedEvent event, String[] args)
     {
-        String[] args = event.getMessage().getContentRaw().split(" ");
-
         try
         {
             engine.put("event", event);
@@ -40,11 +38,11 @@ public class Eval extends CCommand
 
             Object out = engine.eval(StringUtils.join(args, " ", 1, args.length));
 
-            event.reply(out == null ? ":white_check_mark: Executed without any errors!" : out.toString());
+            reply(out == null ? ":white_check_mark: Executed without any errors!" : out.toString());
         }
         catch (ScriptException e)
         {
-            event.reply(e.getMessage());
+            reply(e.getMessage());
         }
     }
 }

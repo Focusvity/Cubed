@@ -91,7 +91,7 @@ public class BlacklistManager
         Connection c = SQLManager.getConnection();
         try
         {
-            c.prepareStatement("DELETE * FROM blacklist WHERE `id` = " + id).executeUpdate();
+            c.prepareStatement("DELETE FROM blacklist WHERE `id` = " + id).executeUpdate();
         }
         catch (SQLException ex)
         {

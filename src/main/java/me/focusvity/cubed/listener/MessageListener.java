@@ -1,11 +1,7 @@
 package me.focusvity.cubed.listener;
 
 import me.focusvity.cubed.Cubed;
-import me.focusvity.cubed.blacklist.Blacklist;
-import me.focusvity.cubed.blacklist.BlacklistManager;
-import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.PrivateChannel;
-import net.dv8tion.jda.core.entities.User;
+import me.focusvity.cubed.command.CCommand;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
 
@@ -16,8 +12,6 @@ public class MessageListener extends ListenerAdapter
     public void onMessageReceived(MessageReceivedEvent event)
     {
         String message = event.getMessage().getContentRaw();
-        User user = event.getAuthor();
-        JDA api = event.getJDA();
 
         if (message.contains("┻━┻"))
         {
@@ -25,15 +19,29 @@ public class MessageListener extends ListenerAdapter
             return;
         }
 
-        if ((message.startsWith(Cubed.config.getDefaultPrefix()) || message.startsWith("~>")) && BlacklistManager.isBlacklisted(user.getId()))
+        int position = Cubed.config.getDefaultPrefix().length();
+        String[] args = message.split(" ");
+        if (message.startsWith(Cubed.config.getDefaultPrefix()))
         {
-            Blacklist blacklist = BlacklistManager.getBlacklist(user.getId());
-            PrivateChannel channel = user.openPrivateChannel().complete();
-            channel.sendMessage("You have been blacklisted by `"
-                    + api.getUserById(blacklist.getBy()).getName() + "#"
-                    + api.getUserById(blacklist.getBy()).getDiscriminator() + "` for"
-                    + " `" + blacklist.getReason() + "`").queue();
-            channel.sendMessage("You may not use me!").queue();
+            for (CCommand command : CCommand.getCommands())
+            {
+                if (message.substring(position).startsWith(command.getName()))
+                {
+                    command.run(event, args);
+                    return;
+                }
+                else
+                {
+                    for (String alias : command.getAliases())
+                    {
+                        if (message.substring(position).startsWith(alias))
+                        {
+                            command.run(event, args);
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 }

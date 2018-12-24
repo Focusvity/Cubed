@@ -1,9 +1,9 @@
 package me.focusvity.cubed.command.owner;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import me.focusvity.cubed.blacklist.BlacklistManager;
 import me.focusvity.cubed.command.CCommand;
 import net.dv8tion.jda.core.JDA;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Unblacklist extends CCommand
 {
@@ -17,14 +17,13 @@ public class Unblacklist extends CCommand
     }
 
     @Override
-    public void execute(CommandEvent event)
+    public void execute(MessageReceivedEvent event, String[] args)
     {
-        String[] args = event.getMessage().getContentRaw().split(" ");
         JDA api = event.getJDA();
 
         if (args.length < 2)
         {
-            event.reply("Not enough argument!");
+            reply("Not enough argument!");
             return;
         }
 
@@ -32,12 +31,12 @@ public class Unblacklist extends CCommand
 
         if (!BlacklistManager.isBlacklisted(id))
         {
-            event.reply("That id isn't blacklisted!");
+            reply("That id isn't blacklisted!");
             return;
         }
 
         BlacklistManager.removeBlacklist(args[1]);
-        event.reply("Successfully removed blacklist from `"
+        reply("Successfully removed blacklist from `"
                 + api.getUserById(id).getName() + "#"
                 + api.getUserById(id).getDiscriminator()
                 + "` (" + id + ")");

@@ -1,9 +1,9 @@
 package me.focusvity.cubed.command.information;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import me.focusvity.cubed.command.CCommand;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
@@ -18,23 +18,21 @@ public class Help extends CCommand
     }
 
     @Override
-    protected void execute(CommandEvent event)
+    protected void execute(MessageReceivedEvent event, String[] args)
     {
-        String[] args = event.getMessage().getContentRaw().split(" ");
-
         if (args.length > 1)
         {
             MessageEmbed embed = new EmbedBuilder()
                     .setColor(Color.RED)
                     .setDescription("Found too many arguments (" + args.length + ")")
                     .build();
-            event.reply(embed);
+            reply(embed);
             return;
         }
 
         EmbedBuilder builder = new EmbedBuilder()
-                .setTitle("Help Information for " + event.getSelfMember().getEffectiveName())
-                .setThumbnail(event.getSelfUser().getAvatarUrl())
+                .setTitle("Help Information for " + event.getMember().getEffectiveName())
+                .setThumbnail(event.getJDA().getSelfUser().getAvatarUrl())
                 .setColor(Color.WHITE);
 
         for (CCommand command : getCommands())
@@ -46,6 +44,6 @@ public class Help extends CCommand
                     false);
         }
 
-        event.reply(builder.build());
+        reply(builder.build());
     }
 }

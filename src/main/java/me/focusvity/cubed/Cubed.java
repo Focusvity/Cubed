@@ -1,7 +1,5 @@
 package me.focusvity.cubed;
 
-import com.jagrosh.jdautilities.command.CommandClient;
-import com.jagrosh.jdautilities.command.CommandClientBuilder;
 import lombok.Getter;
 import me.focusvity.cubed.audio.GuildAudioManager;
 import me.focusvity.cubed.command.CCommand;
@@ -52,25 +50,16 @@ public class Cubed
                     config.getSqlPassword(),
                     config.getSqlDatabase());
 
-            CommandClientBuilder ccb = new CommandClientBuilder();
-            ccb.setOwnerId(config.getOwnerId());
-            ccb.setPrefix(config.getDefaultPrefix());
-            ccb.setAlternativePrefix("~>");
-            ccb.useHelpBuilder(false);
-
             Reflections r = new Reflections("me.focusvity.cubed.command");
             Set<Class<? extends CCommand>> commandClasses = r.getSubTypesOf(CCommand.class);
             for (Class clazz : commandClasses)
             {
-                ccb.addCommand((CCommand) clazz.newInstance());
                 CCommand.getCommands().add((CCommand) clazz.newInstance());
             }
 
-            CommandClient client = ccb.build();
             api = new JDABuilder(config.getToken())
                     .setBulkDeleteSplittingEnabled(false)
                     .setAutoReconnect(true)
-                    .addEventListener(client)
                     .addEventListener(new MessageListener())
                     .setStatus(OnlineStatus.DO_NOT_DISTURB)
                     .build();

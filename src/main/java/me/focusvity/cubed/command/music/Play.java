@@ -1,12 +1,9 @@
 package me.focusvity.cubed.command.music;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import me.focusvity.cubed.command.CCommand;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class Play extends CCommand
 {
@@ -19,21 +16,20 @@ public class Play extends CCommand
     }
 
     @Override
-    protected void execute(CommandEvent event)
+    protected void execute(MessageReceivedEvent event, String[] args)
     {
         AudioPlayer player = gam.getMusicManager(event.getGuild()).player;
-        String[] args = event.getMessage().getContentRaw().split(" ");
 
         if (args.length == 1)
         {
             if (player.isPaused() && player.getPlayingTrack() != null)
             {
                 player.setPaused(false);
-                event.reply("Music resumed!");
+                reply("Music resumed!");
             }
             else if (gam.getMusicManager(event.getGuild()).scheduler.queue.isEmpty())
             {
-                event.reply("I couldn't play anything, the queue is empty!");
+                reply("I couldn't play anything, the queue is empty!");
                 return;
             }
         }

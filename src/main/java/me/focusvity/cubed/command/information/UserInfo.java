@@ -1,12 +1,12 @@
 package me.focusvity.cubed.command.information;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import me.focusvity.cubed.command.CCommand;
 import me.focusvity.cubed.util.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.User;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.awt.*;
 
@@ -21,17 +21,15 @@ public class UserInfo extends CCommand
     }
 
     @Override
-    protected void execute(CommandEvent event)
+    protected void execute(MessageReceivedEvent event, String[] args)
     {
-        String[] args = event.getMessage().getContentRaw().split(" ");
-
         if (args.length > 2)
         {
             MessageEmbed embed = new EmbedBuilder()
                     .setColor(Color.RED)
                     .setDescription("Found too many arguments (" + args.length + ").")
                     .build();
-            event.reply(embed);
+            reply(embed);
             return;
         }
 
@@ -56,7 +54,7 @@ public class UserInfo extends CCommand
                     .addField("Is Bot?", (user.isBot() ? "True" : "False"), true)
                     .addField("Creation", user.getCreationTime().toString(), true)
                     .build();
-            event.reply(embed);
+            reply(embed);
             return;
         }
         else
@@ -74,7 +72,7 @@ public class UserInfo extends CCommand
                     .addField("Is Bot?", (user.isBot() ? "True" : "False"), true)
                     .addField("Creation", user.getCreationTime().toString(), true)
                     .build();
-            event.reply(embed);
+            reply(embed);
         }
     }
 }

@@ -1,8 +1,8 @@
 package me.focusvity.cubed.command.music;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import me.focusvity.cubed.command.CCommand;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Pause extends CCommand
 {
@@ -15,7 +15,7 @@ public class Pause extends CCommand
     }
 
     @Override
-    protected void execute(CommandEvent event)
+    protected void execute(MessageReceivedEvent event, String[] args)
     {
         AudioPlayer player = gam.getMusicManager(event.getGuild()).player;
         if (player.getPlayingTrack() != null)
@@ -23,17 +23,17 @@ public class Pause extends CCommand
             if (player.isPaused())
             {
                 player.setPaused(false);
-                event.reply("Music resumed!");
+                reply("Music resumed!");
             }
             else
             {
                 player.setPaused(true);
-                event.reply("Music paused!");
+                reply("Music paused!");
             }
         }
         else
         {
-            event.reply("No music is playing!");
+            reply("No music is playing!");
         }
     }
 }

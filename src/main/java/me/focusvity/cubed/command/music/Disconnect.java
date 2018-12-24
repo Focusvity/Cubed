@@ -1,7 +1,7 @@
 package me.focusvity.cubed.command.music;
 
-import com.jagrosh.jdautilities.command.CommandEvent;
 import me.focusvity.cubed.command.CCommand;
+import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Disconnect extends CCommand
 {
@@ -14,16 +14,16 @@ public class Disconnect extends CCommand
     }
 
     @Override
-    protected void execute(CommandEvent event)
+    protected void execute(MessageReceivedEvent event, String[] args)
     {
         if (event.getGuild().getAudioManager().isConnected())
         {
             event.getGuild().getAudioManager().closeAudioConnection();
-            event.reply("Left the voice channel!");
+            reply("Left the voice channel!");
         }
         else
         {
-            event.reply("I am not in a voice channel!");
+            reply("I am not in a voice channel!");
         }
     }
 }
