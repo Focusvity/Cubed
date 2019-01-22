@@ -1,6 +1,7 @@
 package me.focusvity.cubed.command.music;
 
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Connect extends CCommand
@@ -11,6 +12,7 @@ public class Connect extends CCommand
         this.name = "connect";
         this.aliases = new String[]{"join", "summon"};
         this.help = "Connect to the voice channel you are in";
+        this.category = Category.MUSIC;
     }
 
     @Override

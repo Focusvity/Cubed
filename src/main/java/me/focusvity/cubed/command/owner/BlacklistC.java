@@ -2,6 +2,7 @@ package me.focusvity.cubed.command.owner;
 
 import me.focusvity.cubed.blacklist.BlacklistManager;
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
@@ -14,6 +15,7 @@ public class BlacklistC extends CCommand
         this.name = "blacklist";
         this.help = "Blacklist an user";
         this.arguments = "{id} {reason}";
+        this.category = Category.OWNER;
         this.ownerCommand = true;
     }
 

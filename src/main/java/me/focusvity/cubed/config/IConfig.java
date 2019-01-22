@@ -30,4 +30,7 @@ public class IConfig
     @Getter
     @Setter
     private String sqlDatabase;
+    @Getter
+    @Setter
+    private String bfdToken;
 }

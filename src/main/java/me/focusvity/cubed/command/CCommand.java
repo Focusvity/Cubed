@@ -30,6 +30,8 @@ public abstract class CCommand
     protected String arguments = null;
     @Getter
     protected String[] aliases = new String[0];
+    @Getter
+    protected Category category = Category.INFORMATION;
     protected boolean ownerCommand = false;
 
     private MessageReceivedEvent event;

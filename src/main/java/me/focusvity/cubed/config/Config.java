@@ -124,6 +124,12 @@ public class Config
             modified = true;
         }
 
+        if (iConfig.getBfdToken() == null)
+        {
+            iConfig.setBfdToken("");
+            modified = true;
+        }
+
         if (modified)
         {
             save();

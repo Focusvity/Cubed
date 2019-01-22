@@ -2,6 +2,7 @@ package me.focusvity.cubed.command.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 
@@ -13,6 +14,7 @@ public class Play extends CCommand
         this.name = "play";
         this.arguments = "(title/link)";
         this.help = "Play a song!";
+        this.category = Category.MUSIC;
     }
 
     @Override
@@ -26,6 +28,7 @@ public class Play extends CCommand
             {
                 player.setPaused(false);
                 reply("Music resumed!");
+                return;
             }
             else if (gam.getMusicManager(event.getGuild()).scheduler.queue.isEmpty())
             {

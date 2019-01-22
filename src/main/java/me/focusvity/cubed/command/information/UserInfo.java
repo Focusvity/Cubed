@@ -1,6 +1,7 @@
 package me.focusvity.cubed.command.information;
 
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import me.focusvity.cubed.util.Utils;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Member;
@@ -18,6 +19,7 @@ public class UserInfo extends CCommand
         this.name = "userinfo";
         this.arguments = "{@mention}";
         this.help = "Shows information about yourself or user you mentioned";
+        this.category = Category.INFORMATION;
     }
 
     @Override

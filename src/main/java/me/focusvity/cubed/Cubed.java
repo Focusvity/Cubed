@@ -5,6 +5,7 @@ import me.focusvity.cubed.audio.GuildAudioManager;
 import me.focusvity.cubed.command.CCommand;
 import me.focusvity.cubed.config.Config;
 import me.focusvity.cubed.config.IConfig;
+import me.focusvity.cubed.listener.BFDListener;
 import me.focusvity.cubed.listener.MessageListener;
 import me.focusvity.cubed.util.SQLManager;
 import net.dv8tion.jda.core.JDA;
@@ -61,7 +62,8 @@ public class Cubed
                     .setBulkDeleteSplittingEnabled(false)
                     .setAutoReconnect(true)
                     .addEventListener(new MessageListener())
-                    .setStatus(OnlineStatus.DO_NOT_DISTURB)
+                    .addEventListener(new BFDListener())
+                    .setStatus(OnlineStatus.ONLINE)
                     .build();
             api.awaitReady();
         }

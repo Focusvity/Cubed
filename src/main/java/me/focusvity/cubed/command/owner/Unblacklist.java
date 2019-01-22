@@ -2,6 +2,7 @@ package me.focusvity.cubed.command.owner;
 
 import me.focusvity.cubed.blacklist.BlacklistManager;
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
@@ -13,6 +14,7 @@ public class Unblacklist extends CCommand
         this.name = "unblacklist";
         this.arguments = "{id}";
         this.help = "Lift blacklist from an user";
+        this.category = Category.OWNER;
         this.ownerCommand = true;
     }
 

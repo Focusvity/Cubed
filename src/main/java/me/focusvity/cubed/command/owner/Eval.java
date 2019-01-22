@@ -1,6 +1,7 @@
 package me.focusvity.cubed.command.owner;
 
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,6 +20,7 @@ public class Eval extends CCommand
         this.aliases = new String[]{"evaluate"};
         this.arguments = "<code>";
         this.help = "Evaluates the entered code";
+        this.category = Category.OWNER;
         this.ownerCommand = true;
         engine = new ScriptEngineManager().getEngineByName("Nashorn");
     }

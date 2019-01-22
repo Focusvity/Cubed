@@ -2,6 +2,7 @@ package me.focusvity.cubed.command.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 public class Pause extends CCommand
@@ -12,6 +13,7 @@ public class Pause extends CCommand
         this.name = "pause";
         this.help = "Pause or resume the music!";
         this.aliases = new String[]{"stop", "resume", "continue", "unpause"};
+        this.category = Category.MUSIC;
     }
 
     @Override

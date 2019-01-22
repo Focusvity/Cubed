@@ -1,6 +1,7 @@
 package me.focusvity.cubed.command.fun;
 
 import me.focusvity.cubed.command.CCommand;
+import me.focusvity.cubed.command.Category;
 import me.focusvity.cubed.util.Quotes;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -17,6 +18,7 @@ public class Quote extends CCommand
         this.name = "quote";
         this.help = "Quotes from random people";
         this.arguments = "{name}";
+        this.category = Category.FUN;
     }
 
     @Override
