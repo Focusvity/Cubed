@@ -5,9 +5,12 @@ import me.focusvity.cubed.Cubed;
 import me.focusvity.cubed.audio.GuildAudioManager;
 import me.focusvity.cubed.blacklist.Blacklist;
 import me.focusvity.cubed.blacklist.BlacklistManager;
+import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.PrivateChannel;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
+import net.dv8tion.jda.core.managers.GuildController;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +19,7 @@ public abstract class CCommand
 {
 
     public GuildAudioManager gam = Cubed.gam;
+    public GuildController controller;
 
     @Getter
     private static List<CCommand> commands = new ArrayList<>();
@@ -32,6 +36,7 @@ public abstract class CCommand
     protected String[] aliases = new String[0];
     @Getter
     protected Category category = Category.INFORMATION;
+    protected Permission[] permissions = new Permission[]{};
     protected boolean ownerCommand = false;
 
     private MessageReceivedEvent event;
@@ -49,6 +54,7 @@ public abstract class CCommand
     public final void run(MessageReceivedEvent event, String[] args)
     {
         this.event = event;
+        this.controller = new GuildController(event.getGuild());
 
         if (BlacklistManager.isBlacklisted(event.getAuthor().getId()))
         {
@@ -59,6 +65,13 @@ public abstract class CCommand
                     + event.getJDA().getUserById(blacklist.getBy()).getDiscriminator() + "` for"
                     + " `" + blacklist.getReason() + "`").queue();
             channel.sendMessage("You may not use me!").queue();
+            return;
+        }
+
+        if (!event.getMember().hasPermission(permissions))
+        {
+            reply("You are missing one or more permissions: "
+                    + StringUtils.join(permissions.toString(), ", "));
             return;
         }
 

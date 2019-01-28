@@ -1,9 +1,9 @@
 package me.focusvity.cubed.util;
 
+import com.mysql.jdbc.Driver;
 import lombok.Getter;
 import me.focusvity.cubed.Cubed;
 
-import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -26,7 +26,7 @@ public class SQLManager
                 password = "";
             }
 
-            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+            DriverManager.registerDriver(new Driver());
             connection = DriverManager.getConnection(url, user, password);
             if (connection != null)
             {
@@ -51,6 +51,11 @@ public class SQLManager
                 + "`id` VARCHAR(255) PRIMARY KEY,"
                 + "`by` VARCHAR(255) NOT NULL,"
                 + "reason TEXT)";
+        String guilds = "CREATE TABLE IF NOT EXISTS guilds ("
+                + "`id` VARCHAR(255) PRIMARY KEY,"
+                + "autorole VARCHAR(255),"
+                + "cmdprefix VARCHAR(255))";
         c.prepareStatement(blacklist).executeUpdate();
+        c.prepareStatement(guilds).executeUpdate();
     }
 }

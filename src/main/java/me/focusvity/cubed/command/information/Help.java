@@ -33,7 +33,7 @@ public class Help extends CCommand
         }
 
         EmbedBuilder builder = new EmbedBuilder()
-                .setTitle("Help Information for " + event.getMember().getEffectiveName())
+                .setTitle("Help Information for " + event.getJDA().getSelfUser().getName())
                 .setThumbnail(event.getJDA().getSelfUser().getAvatarUrl())
                 .setColor(Color.WHITE);
 
@@ -42,7 +42,7 @@ public class Help extends CCommand
             builder.addField(command.getName(),
                     "Description: " + command.getHelp() + "\n"
                             + "Usage: " + command.getName() + " " + (command.getArguments() != null ? command.getArguments() : "") + "\n"
-                            + (command.getAliases().length > 0 ? "Aliases: " + StringUtils.join(command.getAliases(), ", ") : "") + "\n"
+                            + (command.getAliases().length > 0 ? "Aliases: " + StringUtils.join(command.getAliases(), ", ") + "\n" : "")
                             + "Category: " + command.getCategory().getName(),
                     false);
         }

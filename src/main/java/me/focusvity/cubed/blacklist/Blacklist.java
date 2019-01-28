@@ -2,7 +2,6 @@ package me.focusvity.cubed.blacklist;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.dv8tion.jda.core.entities.User;
 
 public class Blacklist
 {

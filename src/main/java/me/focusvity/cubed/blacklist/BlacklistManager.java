@@ -3,7 +3,11 @@ package me.focusvity.cubed.blacklist;
 import lombok.Getter;
 import me.focusvity.cubed.Cubed;
 import me.focusvity.cubed.util.SQLManager;
+import net.dv8tion.jda.core.EmbedBuilder;
+import net.dv8tion.jda.core.entities.MessageEmbed;
+import net.dv8tion.jda.core.entities.User;
 
+import java.awt.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -84,6 +88,25 @@ public class BlacklistManager
     public static Blacklist getBlacklist(String id)
     {
         return blacklistMap.get(id);
+    }
+
+    public static MessageEmbed getBlacklistedUsers()
+    {
+        EmbedBuilder e = new EmbedBuilder()
+                .setTitle("Blacklisted Users (" + blacklistMap.size() + ")")
+                .setColor(Color.BLACK);
+
+        for (Blacklist list : blacklistMap.values())
+        {
+            User blacklisted = Cubed.api.getUserById(list.getId());
+            User by = Cubed.api.getUserById(list.getBy());
+            e.addField(blacklisted.getName() + "#" + blacklisted.getDiscriminator(),
+                    "By: " + by.getName() + "#" + by.getDiscriminator() + "\n"
+                            + "Reason: " + list.getReason(),
+                    false);
+        }
+
+        return e.build();
     }
 
     public static void deleteFromSql(String id)

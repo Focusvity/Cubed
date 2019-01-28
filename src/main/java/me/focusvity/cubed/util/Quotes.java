@@ -40,7 +40,7 @@ public enum Quotes
             "Rhyfomos",
             "remove robin",
             "i love being a mom but it's tough when my kids come from filthy from radical"
-            + " terrisiom",
+                    + " terrisiom",
             ":^)",
             "ah yes",
             "square emo european",
@@ -48,7 +48,8 @@ public enum Quotes
             ":okretard:"
     }),
     FLEEK(new String[]{
-            "irix = isis confirmed"
+            "irix = isis confirmed",
+            "FBI!\nGET IN THE GROUND!!!"
     }),
     NEO(new String[]{
             "you must've dated a handicap",

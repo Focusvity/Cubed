@@ -7,6 +7,7 @@ public enum Category
 
     FUN("fun"),
     INFORMATION("information"),
+    MODERATION("moderation"),
     MUSIC("music"),
     OWNER("owner");
 

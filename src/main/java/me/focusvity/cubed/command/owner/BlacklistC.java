@@ -14,7 +14,7 @@ public class BlacklistC extends CCommand
     {
         this.name = "blacklist";
         this.help = "Blacklist an user";
-        this.arguments = "{id} {reason}";
+        this.arguments = "list | {id} {reason}";
         this.category = Category.OWNER;
         this.ownerCommand = true;
     }
@@ -23,6 +23,12 @@ public class BlacklistC extends CCommand
     public void execute(MessageReceivedEvent event, String[] args)
     {
         JDA api = event.getJDA();
+
+        if (args.length == 2 && args[1].equalsIgnoreCase("list"))
+        {
+            reply(BlacklistManager.getBlacklistedUsers());
+            return;
+        }
 
         if (args.length < 3)
         {

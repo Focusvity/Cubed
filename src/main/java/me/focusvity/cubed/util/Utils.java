@@ -4,6 +4,7 @@ import me.focusvity.cubed.Cubed;
 import net.dv8tion.jda.core.JDA;
 import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.Message;
+import net.dv8tion.jda.core.entities.Role;
 import net.dv8tion.jda.core.entities.TextChannel;
 import okhttp3.*;
 import org.json.JSONObject;
@@ -26,11 +27,27 @@ public class Utils
 
         if (members.size() > 1)
         {
-            channel.sendMessage(":warning: Sorry, too many people!");
-            return null;
+            channel.sendMessage("Found more than one member mentioned, selecting the first mentioned user").queue();
         }
 
         return members.get(0);
+    }
+
+    public static Role findRole(Message message, TextChannel channel)
+    {
+        List<Role> roles = message.getMentionedRoles();
+
+        if (roles.isEmpty())
+        {
+            return null;
+        }
+
+        if (roles.size() > 1)
+        {
+            channel.sendMessage("Found more than one role mentioned, selecting first mentioned role.").queue();
+        }
+
+        return roles.get(0);
     }
 
     public static void updateBotsForDiscordCount(JDA api)
