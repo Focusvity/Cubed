@@ -6,6 +6,7 @@ import me.focusvity.cubed.command.CCommand;
 import me.focusvity.cubed.config.Config;
 import me.focusvity.cubed.config.IConfig;
 import me.focusvity.cubed.listener.BFDListener;
+import me.focusvity.cubed.listener.GuildListener;
 import me.focusvity.cubed.listener.MessageListener;
 import me.focusvity.cubed.util.SQLManager;
 import net.dv8tion.jda.core.JDA;
@@ -61,6 +62,7 @@ public class Cubed
             api = new JDABuilder(config.getToken())
                     .setBulkDeleteSplittingEnabled(false)
                     .setAutoReconnect(true)
+                    .addEventListener(new GuildListener())
                     .addEventListener(new MessageListener())
                     .addEventListener(new BFDListener())
                     .setStatus(OnlineStatus.ONLINE)

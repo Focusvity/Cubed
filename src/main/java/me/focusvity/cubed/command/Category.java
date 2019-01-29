@@ -6,6 +6,7 @@ public enum Category
 {
 
     FUN("fun"),
+    GUILD("guild"),
     INFORMATION("information"),
     MODERATION("moderation"),
     MUSIC("music"),

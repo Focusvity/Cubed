@@ -1,14 +1,13 @@
 package me.focusvity.cubed.util;
 
 import me.focusvity.cubed.Cubed;
+import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.JDA;
-import net.dv8tion.jda.core.entities.Member;
-import net.dv8tion.jda.core.entities.Message;
-import net.dv8tion.jda.core.entities.Role;
-import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.entities.*;
 import okhttp3.*;
 import org.json.JSONObject;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -89,6 +88,23 @@ public class Utils
         catch (IOException ex)
         {
             Cubed.getLogger().error("", ex);
+        }
+    }
+
+    public static void modLog(Guild guild, ModAction action, MessageEmbed.Field... fields)
+    {
+        EmbedBuilder embed = new EmbedBuilder().setColor(Color.ORANGE);
+        embed.setTitle(action.getName());
+
+        for (MessageEmbed.Field field : fields)
+        {
+            embed.addField(field);
+        }
+
+        TextChannel channel = guild.getTextChannelById(SQLManager.getFromGuilds(guild.getId(), "modlog"));
+        if (channel != null)
+        {
+            channel.sendMessage(embed.build()).queue();
         }
     }
 }

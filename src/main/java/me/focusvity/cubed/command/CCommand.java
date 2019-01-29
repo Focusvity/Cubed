@@ -56,6 +56,12 @@ public abstract class CCommand
         this.event = event;
         this.controller = new GuildController(event.getGuild());
 
+        // Don't respond to bots
+        if (event.getAuthor().isBot())
+        {
+            return;
+        }
+
         if (BlacklistManager.isBlacklisted(event.getAuthor().getId()))
         {
             Blacklist blacklist = BlacklistManager.getBlacklist(event.getAuthor().getId());

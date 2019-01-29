@@ -28,7 +28,7 @@ public class AddRole extends CCommand
     {
         if (args.length != 3)
         {
-            reply("Requires 3 arguments!");
+            reply("Requires 2 arguments!");
             return;
         }
 
