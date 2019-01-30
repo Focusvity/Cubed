@@ -64,18 +64,18 @@ public class GuildListener extends ListenerAdapter
         if (joinChannel != null)
         {
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN)
-                    .setTitle("New Member!", event.getUser().getEffectiveAvatarUrl());
+                    .setTitle("New Member!")
+                    .setThumbnail(user.getEffectiveAvatarUrl());
             embed.addField("Member", user.getName() + "#" + user.getDiscriminator(), false);
             embed.addField("Created At", user.getCreationTime().toString(), false);
-            embed.setFooter(":arrow_up_small: Member Count: " + guild.getMembers().size(), null);
+            embed.setFooter("Member Count: " + guild.getMembers().size(), null);
             joinChannel.sendMessage(embed.build()).queue();
         }
 
         Role role = guild.getRoleById(SQLManager.getFromGuilds(guild.getId(), "autorole"));
         if (role != null)
         {
-            GuildController controller = new GuildController(guild);
-            controller.addRolesToMember(member, role).queue();
+            guild.getController().addRolesToMember(member, role).queue();
         }
 
         VoiceChannel channel = guild.getVoiceChannelById(SQLManager.getFromGuilds(guild.getId(), "membercount"));

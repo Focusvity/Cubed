@@ -54,7 +54,7 @@ public abstract class CCommand
     public final void run(MessageReceivedEvent event, String[] args)
     {
         this.event = event;
-        this.controller = new GuildController(event.getGuild());
+        this.controller = event.getGuild().getController();
 
         // Don't respond to bots
         if (event.getAuthor().isBot())

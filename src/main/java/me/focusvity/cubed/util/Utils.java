@@ -102,9 +102,11 @@ public class Utils
         }
 
         TextChannel channel = guild.getTextChannelById(SQLManager.getFromGuilds(guild.getId(), "modlog"));
-        if (channel != null)
+        if (channel == null)
         {
-            channel.sendMessage(embed.build()).queue();
+            return;
         }
+
+        channel.sendMessage(embed.build()).queue();
     }
 }
