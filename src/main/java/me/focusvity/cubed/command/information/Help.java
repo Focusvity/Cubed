@@ -8,6 +8,8 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Help extends CCommand
 {
@@ -32,6 +34,13 @@ public class Help extends CCommand
             return;
         }
 
+        List<String> fun = new ArrayList<>();
+        List<String> guild = new ArrayList<>();
+        List<String> information = new ArrayList<>();
+        List<String> moderation = new ArrayList<>();
+        List<String> music = new ArrayList<>();
+        List<String> owner = new ArrayList<>();
+
         EmbedBuilder builder = new EmbedBuilder()
                 .setTitle("Help Information for " + event.getJDA().getSelfUser().getName())
                 .setThumbnail(event.getJDA().getSelfUser().getAvatarUrl())
@@ -39,13 +48,47 @@ public class Help extends CCommand
 
         for (CCommand command : getCommands())
         {
-            builder.addField(command.getName(),
-                    "Description: " + command.getHelp() + "\n"
-                            + "Usage: " + command.getName() + " " + (command.getArguments() != null ? command.getArguments() : "") + "\n"
-                            + (command.getAliases().length > 0 ? "Aliases: " + StringUtils.join(command.getAliases(), ", ") + "\n" : "")
-                            + "Category: " + command.getCategory().getName(),
-                    false);
+            switch (command.getCategory())
+            {
+                case FUN:
+                {
+                    fun.add("`" + command.getName() + "`");
+                    break;
+                }
+                case GUILD:
+                {
+                    guild.add("`" + command.getName() + "`");
+                    break;
+                }
+                case INFORMATION:
+                {
+                    information.add("`" + command.getName() + "`");
+                    break;
+                }
+                case MODERATION:
+                {
+                    moderation.add("`" + command.getName() + "`");
+                    break;
+                }
+                case MUSIC:
+                {
+                    music.add("`" + command.getName() + "`");
+                    break;
+                }
+                case OWNER:
+                {
+                    owner.add("`" + command.getName() + "`");
+                    break;
+                }
+            }
         }
+
+        builder.addField("Fun", StringUtils.join(fun, ", "), false);
+        builder.addField("Guild", StringUtils.join(guild, ", "), false);
+        builder.addField("Information", StringUtils.join(information, ", "), false);
+        builder.addField("Moderation", StringUtils.join(moderation, ", "), false);
+        builder.addField("Music", StringUtils.join(music, ", "), false);
+        builder.addField("Owner", StringUtils.join(owner, ", "), false);
 
         reply(builder.build());
     }

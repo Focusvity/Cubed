@@ -66,7 +66,7 @@ public class GuildListener extends ListenerAdapter
             EmbedBuilder embed = new EmbedBuilder().setColor(Color.GREEN)
                     .setTitle("New Member!")
                     .setThumbnail(user.getEffectiveAvatarUrl());
-            embed.addField("Member", user.getName() + "#" + user.getDiscriminator(), false);
+            embed.addField("Member", user.getAsMention(), false);
             embed.addField("Created At", user.getCreationTime().toString(), false);
             embed.setFooter("Member Count: " + guild.getMembers().size(), null);
             joinChannel.sendMessage(embed.build()).queue();
@@ -107,7 +107,7 @@ public class GuildListener extends ListenerAdapter
         }
 
         Utils.modLog(event.getGuild(), ModAction.MEMBER_ROLE_ADD,
-                new MessageEmbed.Field("Member", event.getMember().getEffectiveName(), false),
+                new MessageEmbed.Field("Member", event.getMember().getAsMention(), false),
                 new MessageEmbed.Field("Role(s)", StringUtils.join(roles, ", "), false));
     }
 
@@ -122,7 +122,7 @@ public class GuildListener extends ListenerAdapter
         }
 
         Utils.modLog(event.getGuild(), ModAction.MEMBER_ROLE_REMOVE,
-                new MessageEmbed.Field("Member", event.getMember().getEffectiveName(), false),
+                new MessageEmbed.Field("Member", event.getMember().getAsMention(), false),
                 new MessageEmbed.Field("Role(s)", StringUtils.join(roles, ", "), false));
     }
 }

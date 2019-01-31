@@ -77,6 +77,7 @@ public class BlackJack extends CCommand
             }
 
             reply("Wrong arguments, type `help` for help.");
+            return;
         }
 
         if (games.containsKey(user.getId()) && games.get(user.getId()).isInProgress())
