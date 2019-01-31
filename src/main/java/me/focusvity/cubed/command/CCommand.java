@@ -14,12 +14,22 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 public abstract class CCommand
 {
 
     public GuildAudioManager gam = Cubed.gam;
     public GuildController controller;
+    private ScheduledExecutorService scheduler;
+
+    public CCommand()
+    {
+        scheduler = Executors.newScheduledThreadPool(1);
+    }
 
     @Getter
     private static List<CCommand> commands = new ArrayList<>();
@@ -49,6 +59,11 @@ public abstract class CCommand
     public void reply(MessageEmbed embed)
     {
         event.getTextChannel().sendMessage(embed).queue();
+    }
+
+    public ScheduledFuture<?> scheduleRepeat(Runnable task, long start, long repeat)
+    {
+        return scheduler.scheduleWithFixedDelay(task, start, repeat, TimeUnit.MILLISECONDS);
     }
 
     public final void run(MessageReceivedEvent event, String[] args)
