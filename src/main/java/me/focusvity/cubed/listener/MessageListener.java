@@ -21,7 +21,7 @@ public class MessageListener extends ListenerAdapter
         }
 
         String commandPrefix = SQLManager.getFromGuilds(event.getGuild().getId(), "cmdprefix");
-        int position = 0;
+        int position;
         String[] args = message.split(" ");
         if (commandPrefix != null && message.startsWith(commandPrefix))
         {

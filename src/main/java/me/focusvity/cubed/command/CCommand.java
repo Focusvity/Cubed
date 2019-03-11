@@ -6,8 +6,10 @@ import me.focusvity.cubed.audio.GuildAudioManager;
 import me.focusvity.cubed.blacklist.Blacklist;
 import me.focusvity.cubed.blacklist.BlacklistManager;
 import net.dv8tion.jda.core.Permission;
+import net.dv8tion.jda.core.entities.Member;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.PrivateChannel;
+import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.core.managers.GuildController;
 import org.apache.commons.lang3.StringUtils;
@@ -50,6 +52,8 @@ public abstract class CCommand
     protected boolean ownerCommand = false;
 
     private MessageReceivedEvent event;
+    public Member sender;
+    public User userSender;
 
     public void reply(String message)
     {
@@ -66,18 +70,25 @@ public abstract class CCommand
         return scheduler.scheduleWithFixedDelay(task, start, repeat, TimeUnit.MILLISECONDS);
     }
 
+    public boolean needPermissions()
+    {
+        return permissions.length > 0;
+    }
+
     public final void run(MessageReceivedEvent event, String[] args)
     {
         this.event = event;
+        this.sender = event.getMember();
+        userSender = sender.getUser();
         this.controller = event.getGuild().getController();
 
         // Don't respond to bots
-        if (event.getAuthor().isBot())
+        if (userSender.isBot())
         {
             return;
         }
 
-        if (BlacklistManager.isBlacklisted(event.getAuthor().getId()))
+        if (BlacklistManager.isBlacklisted(userSender.getId()))
         {
             Blacklist blacklist = BlacklistManager.getBlacklist(event.getAuthor().getId());
             PrivateChannel channel = event.getAuthor().openPrivateChannel().complete();
@@ -89,14 +100,14 @@ public abstract class CCommand
             return;
         }
 
-        if (!event.getMember().hasPermission(permissions))
+        if (!sender.hasPermission(permissions))
         {
             reply("You are missing one or more permissions: "
-                    + StringUtils.join(permissions.toString(), ", "));
+                    + StringUtils.join(permissions, ", "));
             return;
         }
 
-        if (ownerCommand && !event.getAuthor().getId().equals(Cubed.config.getOwnerId()))
+        if (ownerCommand && !userSender.getId().equals(Cubed.config.getOwnerId()))
         {
             reply("Only the bot owner can run this command!");
             return;

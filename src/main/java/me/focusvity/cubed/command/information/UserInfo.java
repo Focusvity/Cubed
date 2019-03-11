@@ -61,18 +61,15 @@ public class UserInfo extends CCommand
         }
         else
         {
-            Member member = event.getMember();
-            User user = member.getUser();
-
             MessageEmbed embed = new EmbedBuilder()
-                    .setColor(member.getColor())
-                    .setThumbnail(user.getAvatarUrl())
-                    .setTitle("Information for " + member.getEffectiveName())
-                    .addField("Username", user.getName(), true)
-                    .addField("Discriminator", user.getDiscriminator(), true)
-                    .addField("ID", user.getId(), true)
-                    .addField("Is Bot?", (user.isBot() ? "True" : "False"), true)
-                    .addField("Creation", user.getCreationTime().toString(), true)
+                    .setColor(sender.getColor())
+                    .setThumbnail(userSender.getAvatarUrl())
+                    .setTitle("Information for " + sender.getEffectiveName())
+                    .addField("Username", userSender.getName(), true)
+                    .addField("Discriminator", userSender.getDiscriminator(), true)
+                    .addField("ID", userSender.getId(), true)
+                    .addField("Is Bot?", (userSender.isBot() ? "True" : "False"), true)
+                    .addField("Creation", userSender.getCreationTime().toString(), true)
                     .build();
             reply(embed);
         }

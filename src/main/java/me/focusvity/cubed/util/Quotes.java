@@ -50,7 +50,8 @@ public enum Quotes
     FLEEK(new String[]{
             "irix = isis confirmed",
             "FBI!\nGET IN THE GROUND!!!",
-            "You break it, you fix it"
+            "You break it, you fix it",
+            "Water is dangerous"
     }),
     NEO(new String[]{
             "you must've dated a handicap",

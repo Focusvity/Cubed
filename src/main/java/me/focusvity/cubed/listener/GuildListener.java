@@ -1,5 +1,6 @@
 package me.focusvity.cubed.listener;
 
+import me.focusvity.cubed.Cubed;
 import me.focusvity.cubed.util.ModAction;
 import me.focusvity.cubed.util.SQLManager;
 import me.focusvity.cubed.util.Utils;
@@ -13,7 +14,6 @@ import net.dv8tion.jda.core.events.guild.member.GuildMemberLeaveEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberRoleAddEvent;
 import net.dv8tion.jda.core.events.guild.member.GuildMemberRoleRemoveEvent;
 import net.dv8tion.jda.core.hooks.ListenerAdapter;
-import net.dv8tion.jda.core.managers.GuildController;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
@@ -30,6 +30,8 @@ public class GuildListener extends ListenerAdapter
         {
             SQLManager.generateNewGuild(event.getGuild());
         }
+
+        Cubed.api.getPresence().setGame(Game.watching(Cubed.api.getUsers().size() + " users"));
     }
 
     @Override
@@ -39,6 +41,8 @@ public class GuildListener extends ListenerAdapter
         {
             SQLManager.deleteGuild(event.getGuild());
         }
+
+        Cubed.api.getPresence().setGame(Game.watching(Cubed.api.getUsers().size() + " users"));
     }
 
     @Override
@@ -51,6 +55,8 @@ public class GuildListener extends ListenerAdapter
                 SQLManager.generateNewGuild(guild);
             }
         }
+
+        Cubed.api.getPresence().setGame(Game.watching(Cubed.api.getUsers().size() + " users"));
     }
 
     @Override

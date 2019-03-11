@@ -20,10 +20,10 @@ public class Connect extends CCommand
     {
         if (!event.getGuild().getAudioManager().isConnected() && !event.getGuild().getAudioManager().isAttemptingToConnect())
         {
-            if (event.getMember().getVoiceState().inVoiceChannel())
+            if (sender.getVoiceState().inVoiceChannel())
             {
-                event.getGuild().getAudioManager().openAudioConnection(event.getMember().getVoiceState().getChannel());
-                reply("Joined `" + event.getMember().getVoiceState().getChannel().getName() + "`!");
+                event.getGuild().getAudioManager().openAudioConnection(sender.getVoiceState().getChannel());
+                reply("Joined `" + sender.getVoiceState().getChannel().getName() + "`!");
             }
             else
             {
@@ -33,10 +33,10 @@ public class Connect extends CCommand
         else
         {
             event.getGuild().getAudioManager().closeAudioConnection();
-            if (event.getMember().getVoiceState().inVoiceChannel())
+            if (sender.getVoiceState().inVoiceChannel())
             {
                 event.getGuild().getAudioManager().openAudioConnection(event.getMember().getVoiceState().getChannel());
-                reply("Joined `" + event.getMember().getVoiceState().getChannel().getName() + "`!");
+                reply("Joined `" + sender.getVoiceState().getChannel().getName() + "`!");
             }
             else
             {

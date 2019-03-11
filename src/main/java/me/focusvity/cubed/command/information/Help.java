@@ -1,5 +1,6 @@
 package me.focusvity.cubed.command.information;
 
+import com.google.common.base.Strings;
 import me.focusvity.cubed.command.CCommand;
 import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.EmbedBuilder;
@@ -34,17 +35,17 @@ public class Help extends CCommand
             return;
         }
 
+        EmbedBuilder builder = new EmbedBuilder()
+                .setTitle("Help Information for " + event.getJDA().getSelfUser().getName())
+                .setThumbnail(event.getJDA().getSelfUser().getAvatarUrl())
+                .setColor(Color.WHITE);
+
         List<String> fun = new ArrayList<>();
         List<String> guild = new ArrayList<>();
         List<String> information = new ArrayList<>();
         List<String> moderation = new ArrayList<>();
         List<String> music = new ArrayList<>();
         List<String> owner = new ArrayList<>();
-
-        EmbedBuilder builder = new EmbedBuilder()
-                .setTitle("Help Information for " + event.getJDA().getSelfUser().getName())
-                .setThumbnail(event.getJDA().getSelfUser().getAvatarUrl())
-                .setColor(Color.WHITE);
 
         for (CCommand command : getCommands())
         {
@@ -89,6 +90,7 @@ public class Help extends CCommand
         builder.addField("Moderation", StringUtils.join(moderation, ", "), false);
         builder.addField("Music", StringUtils.join(music, ", "), false);
         builder.addField("Owner", StringUtils.join(owner, ", "), false);
+        builder.setFooter("Do /help [name] for more information on a command", null);
 
         reply(builder.build());
     }

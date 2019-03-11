@@ -3,7 +3,6 @@ package me.focusvity.cubed.command.fun;
 import me.focusvity.cubed.command.CCommand;
 import me.focusvity.cubed.command.Category;
 import net.dv8tion.jda.core.entities.TextChannel;
-import net.dv8tion.jda.core.entities.User;
 import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 
 import java.util.Map;
@@ -27,43 +26,42 @@ public class BlackJack extends CCommand
     @Override
     protected void execute(MessageReceivedEvent event, String[] args)
     {
-        User user = event.getAuthor();
         TextChannel channel = event.getTextChannel();
 
         if (args.length == 2)
         {
             if (args[1].equalsIgnoreCase("hit"))
             {
-                if (!games.containsKey(user.getId()) || !games.get(user.getId()).isInProgress())
+                if (!games.containsKey(userSender.getId()) || !games.get(userSender.getId()).isInProgress())
                 {
-                    games.put(user.getId(), new me.focusvity.cubed.game.blackjack.BlackJack(user));
+                    games.put(userSender.getId(), new me.focusvity.cubed.game.blackjack.BlackJack(userSender));
                 }
 
-                if (games.get(user.getId()).isInProgress() && !games.get(user.getId()).isPlayerStanding())
+                if (games.get(userSender.getId()).isInProgress() && !games.get(userSender.getId()).isPlayerStanding())
                 {
-                    games.get(user.getId()).hit();
-                    reply(games.get(user.getId()).toString());
+                    games.get(userSender.getId()).hit();
+                    reply(games.get(userSender.getId()).toString());
                 }
                 return;
             }
             else if (args[1].equalsIgnoreCase("stand"))
             {
-                if (games.containsKey(user.getId()))
+                if (games.containsKey(userSender.getId()))
                 {
                     final Future<?>[] f = {null};
 
-                    if (!games.get(user.getId()).isPlayerStanding())
+                    if (!games.get(userSender.getId()).isPlayerStanding())
                     {
-                        channel.sendMessage(games.get(user.getId()).toString()).queue(message ->
+                        channel.sendMessage(games.get(userSender.getId()).toString()).queue(message ->
                         {
-                            games.get(user.getId()).stand();
+                            games.get(userSender.getId()).stand();
                             f[0] = scheduleRepeat(() ->
                             {
-                                boolean didHit = games.get(user.getId()).dealerHit();
-                                message.editMessage(games.get(user.getId()).toString()).queue();
+                                boolean didHit = games.get(userSender.getId()).dealerHit();
+                                message.editMessage(games.get(userSender.getId()).toString()).queue();
                                 if (!didHit)
                                 {
-                                    games.remove(user.getId());
+                                    games.remove(userSender.getId());
                                     f[0].cancel(false);
                                 }
                             }, 2000L, 2000L);
@@ -80,10 +78,10 @@ public class BlackJack extends CCommand
             return;
         }
 
-        if (games.containsKey(user.getId()) && games.get(user.getId()).isInProgress())
+        if (games.containsKey(userSender.getId()) && games.get(userSender.getId()).isInProgress())
         {
             reply("You're still in a game! To finish the game, type `blackjack stand`!\n"
-                    + games.get(user.getId()).toString());
+                    + games.get(userSender.getId()).toString());
             return;
         }
 
